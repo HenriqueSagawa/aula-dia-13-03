@@ -1,161 +1,84 @@
-:root {
-    --primary-color: #4361ee;
-    --secondary-color: #3f37c9;
-    --success-color: #4cc9f0;
-    --danger-color: #ef476f;
-    --light-color: #f8f9fa;
-    --dark-color: #212529;
-    --gray-color: #6c757d;
-    --border-radius: 8px;
-    --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    --transition: all 0.3s ease;
-}
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
+/* style.css */
 
 body {
-    background-color: #f5f7fb;
-    color: var(--dark-color);
-    line-height: 1.6;
-    padding: 20px;
-    min-height: 100vh;
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
     display: flex;
     justify-content: center;
     align-items: center;
+    min-height: 100vh;
 }
 
-.container {
-    width: 100%;
+div {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 80%;
     max-width: 600px;
-    background-color: white;
-    border-radius: var(--border-radius);
-    box-shadow: var(--box-shadow);
-    padding: 30px;
-    transition: var(--transition);
-}
-
-h1 {
-    color: var(--primary-color);
-    margin-bottom: 24px;
-    font-size: 28px;
     text-align: center;
 }
 
-.form-group {
+h1 {
+    color: #333;
     margin-bottom: 20px;
 }
 
 label {
     display: block;
-    margin-bottom: 8px;
-    font-weight: 600;
-    color: var(--gray-color);
+    margin-bottom: 5px;
+    font-weight: bold;
 }
 
-.input-group {
-    display: flex;
-    gap: 10px;
-}
-
-input {
-    width: 100%;
-    padding: 12px 16px;
-    border: 2px solid #e9ecef;
-    border-radius: var(--border-radius);
-    font-size: 16px;
-    transition: var(--transition);
-}
-
-input:focus {
-    outline: none;
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+input[type="text"] {
+    width: 90%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box; /* Garante que o padding não aumente a largura total */
 }
 
 button {
-    background-color: var(--primary-color);
+    background-color: #4CAF50;
     color: white;
+    padding: 12px 20px;
     border: none;
-    padding: 12px 25px;
-    border-radius: var(--border-radius);
+    border-radius: 4px;
     cursor: pointer;
     font-size: 16px;
-    font-weight: 600;
-    transition: var(--transition);
 }
 
 button:hover {
-    background-color: var(--secondary-color);
-    transform: translateY(-2px);
-}
-
-button:active {
-    transform: translateY(0);
+    background-color: #3e8e41;
 }
 
 #resultado {
-    margin-top: 30px;
-    padding: 20px;
-    border-radius: var(--border-radius);
-    background-color: #f8f9fa;
-    border-left: 4px solid var(--primary-color);
-    display: none;
-}
-
-#resultado.active {
-    display: block;
-    animation: fadeIn 0.5s ease;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
+    margin-top: 20px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    text-align: left;
 }
 
 #resultado h3 {
-    color: var(--primary-color);
-    margin-bottom: 15px;
-    font-size: 20px;
+    color: #333;
+    margin-top: 0;
 }
 
 #resultado p {
-    margin-bottom: 10px;
-    padding: 8px 0;
-    border-bottom: 1px solid #eee;
+    margin-bottom: 8px;
 }
 
-#resultado p:last-child {
-    border-bottom: none;
-}
-
-.error {
-    color: var(--danger-color);
-    font-weight: 600;
-}
-
-.info-group {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 15px;
-}
-
-@media (max-width: 768px) {
-    .container {
-        padding: 20px;
+/* Estilos para telas menores */
+@media (max-width: 600px) {
+    div {
+        width: 95%;
     }
-    
-    .info-group {
-        grid-template-columns: 1fr;
-    }
-}
 
-.cnpj-mask {
-    color: var(--gray-color);
-    font-size: 14px;
-    margin-top: 5px;
+    input[type="text"] {
+        width: 100%;
+    }
 }
