@@ -2,20 +2,16 @@ function buscarCNPJ() {
     let cnpj = document.getElementById('cnpj').value;
     const resultadoDiv = document.getElementById('resultado');
 
-    console.log(resultadoDiv);
-
     cnpj = cnpj.replace(/\D/g, ""); 
 
-    console.log(cnpj)
-
     if (cnpj.length !== 14) {
-        resultadoDiv.innerHTML = `<p style="color: red;">Digite um CNPJ válido, você digitou ${cnpj.length} números</p>`;
+        resultadoDiv.innerHTML = `<p style="color: red;">Digite um CNPJ válido, você digitou ${cnpj.length} números. Deve contem 14 números</p>`;
         return;
     }
 
     const url = `https://cors-anywhere.herokuapp.com/https://receitaws.com.br/v1/cnpj/${cnpj}`;
-    console.log("carregando...");
-
+    setLoader(true);
+    
     fetch(url, {
         headers: {
             'Content-Type': 'application/json',
@@ -24,15 +20,21 @@ function buscarCNPJ() {
     })
     .then(response => {
         if (!response.ok) {
-            throw new Error(`Erro na requisição: ${response.status}`);
+            if (response.status === 429) {
+                throw new Error('Muitas requisições realizadas. Por favor, aguarde alguns minutos e tente novamente.');
+            } else if (response.status === 403) {
+                throw new Error('Acesso negado. Verifique suas permissões ou tente novamente mais tarde.');
+            } else if (response.status === 404) {
+                throw new Error('CNPJ não encontrado na base de dados.');
+            } else if (response.status === 500) {
+                throw new Error('Erro interno do servidor. Tente novamente mais tarde.');
+            } else {
+                throw new Error(`Erro na requisição: ${response.status}`);
+            }
         }
         return response.json();
     })
     .then(data => {
-        console.log("terminou o fetch");
-
-        console.log(data);
-        
         if (data.status === "ERROR") {
             resultadoDiv.innerHTML = '<p style="color: red;">CNPJ não encontrado.</p>';
         } else {
@@ -44,21 +46,28 @@ function buscarCNPJ() {
                 <p><strong>Telefone:</strong> ${data.telefone}</p>
                 <p><strong>Endereço:</strong> ${data.logradouro}, ${data.numero} - ${data.bairro}, ${data.municipio}/${data.uf}</p>
             `;
-            console.log(temp);
 
             if (!resultadoDiv) {
                 console.error("Erro: resultadoDiv não encontrado!");
                 return;
             }
 
-            console.log("Atualizando innerHTML...");
             resultadoDiv.innerHTML = temp;
-            console.log("Atualizou");
+            setLoader(false);
         }
-    }
-
-)
+    })
     .catch(error => {
-        resultadoDiv.innerHTML = `<p style="color: red;">Erro ao buscar CNPJ: ${error.message}</p>`;
-    });
+        setLoader(false);
+        resultadoDiv.innerHTML = `<p style="color: red;">${error.message}</p>`;
+    })
+}
+
+function setLoader(e) {
+    const loader = document.querySelector("#loader");
+
+    if (e) {
+        loader.classList.add('active');
+    } else {
+        loader.classList.remove("active");
+    }
 }
